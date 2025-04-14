@@ -19,7 +19,7 @@ public class GridManager : SingleInstance<GridManager> {
     }
 
     public void DespawnGridController(GridController controller) {
-        controller.SetPosition(transform, Vector3.zero);
+        controller.SetPosition(transform, Vector3.zero, true);
 
         controller.Deactivate();
         _pool.AddObjectToPool(controller);
@@ -33,6 +33,19 @@ public class GridManager : SingleInstance<GridManager> {
         }
 
         _gridControllers = new List<GridController>(size);
+    }
+
+    #endregion
+
+    #region Get Grids
+
+    public GridController GetGridController(Vector3 gridIndex) {
+        GridController grid = _gridControllers.Find(g => g.GridIndex == gridIndex);
+        if (grid == null) {
+            return null;
+        }
+
+        return grid;
     }
 
     #endregion

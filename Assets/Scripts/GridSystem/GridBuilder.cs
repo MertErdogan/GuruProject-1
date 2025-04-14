@@ -40,7 +40,7 @@ public class GridBuilder : SingleInstance<GridBuilder> {
 
     private void HandleInputEntered(string sizeString) {
         if (int.TryParse(sizeString, out int size)) {
-            if (size > MinSize && size <= MaxSize) {
+            if (size >= MinSize && size <= MaxSize) {
                 _gridSize = size;
             } else {
                 ShowGridSizeWarining = true;
@@ -54,6 +54,7 @@ public class GridBuilder : SingleInstance<GridBuilder> {
 
     public void BuildGrid() {
         GridManager.Instance.ClearGridControllers(_gridSize);
+        ScoreManager.Instance.ResetScore();
 
         for (int i = 0; i < _gridSize; i++) {
             for (int j = 0; j < _gridSize; j++) {
