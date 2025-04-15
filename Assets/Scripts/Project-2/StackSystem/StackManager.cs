@@ -90,13 +90,15 @@ public class StackManager : SingleInstance<StackManager> {
             _successfulPlacementSoundFile.startingPitch = 1f + (_pitchShift * _successfullPlacementCount);
             AudioManager.PlaySound(LibrarySounds.SuccessfulPlacement);
 
+            CurrentStack.transform.position = new Vector3((LastStack == null ? 0f : LastStack.transform.position.x), CurrentStack.transform.position.y, CurrentStack.transform.position.z);
+
             _successfullPlacementCount++;
         } else {
             _successfullPlacementCount = 0;
-        }
 
-        float direction = hangover > 0 ? 1f : -1f;
-        SplitStack(hangover, direction);
+            float direction = hangover > 0 ? 1f : -1f;
+            SplitStack(hangover, direction);
+        }
 
         SpawnStack();
     }
