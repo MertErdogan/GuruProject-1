@@ -72,6 +72,8 @@ public class StackManager : SingleInstance<StackManager> {
         stack.transform.position = Vector3.right * _spawnXPosition * (isEven ? -1 : 1) + Vector3.forward * _spawnZPosition;
         stack.transform.localScale = CurrentStack == null ? new Vector3(3f, 1f, 3f) : CurrentStack.transform.localScale;
 
+        stack.SetMaterial(StackMaterialManager.Instance.GetStackMaterial());
+
         stack.IsEvenStack(isEven);
         stack.Activate();
         CurrentStack = stack;
@@ -133,6 +135,8 @@ public class StackManager : SingleInstance<StackManager> {
         GameObject fallingStack = GameObject.CreatePrimitive(PrimitiveType.Cube);
         fallingStack.transform.position = new Vector3(fallingStackXPosition, CurrentStack.transform.position.y, CurrentStack.transform.position.z);
         fallingStack.transform.localScale = new Vector3(fallingStackSize, CurrentStack.transform.localScale.y, CurrentStack.transform.localScale.z);
+
+        fallingStack.GetComponent<MeshRenderer>().sharedMaterial = CurrentStack.StackMaterial;
 
         fallingStack.AddComponent<Rigidbody>();
         Destroy(fallingStack.gameObject, 1f);

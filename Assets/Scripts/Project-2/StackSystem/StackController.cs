@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class StackController : MonoBehaviour, IPoolObject {
 
-    public float MoveSpeed { get => _moveSpeed; }
+    //public float MoveSpeed { get => _moveSpeed; }
+    public Material StackMaterial { get => _renderer.sharedMaterial; }
 
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private MeshRenderer _renderer;
 
     private bool _isEvenStack = true;
     private bool _isActivated = false;
@@ -23,6 +25,14 @@ public class StackController : MonoBehaviour, IPoolObject {
 
     public void IsEvenStack(bool isEven) {
         _isEvenStack = isEven;
+    }
+
+    #endregion
+
+    #region Set Material
+
+    public void SetMaterial(Material material) {
+        _renderer.sharedMaterial = material;
     }
 
     #endregion
