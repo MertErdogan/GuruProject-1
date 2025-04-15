@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class StackController : MonoBehaviour, IPoolObject {
 
+    public float MoveSpeed { get => _moveSpeed; }
+
     [SerializeField] private float _moveSpeed;
 
     private bool _isEvenStack = true;

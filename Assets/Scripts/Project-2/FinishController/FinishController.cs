@@ -9,7 +9,9 @@ public class FinishController : SingleInstance<FinishController> {
     #region Move Finish Line
 
     public void MoveFinishLine() {
-        transform.position += Vector3.forward * _levelLength;
+        Timer.Instance.Add(() => {
+            transform.position += Vector3.forward * _levelLength;
+        }, 1.5f);
     }
 
     #endregion

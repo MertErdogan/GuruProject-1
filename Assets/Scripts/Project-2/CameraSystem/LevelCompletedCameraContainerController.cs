@@ -23,7 +23,7 @@ public class LevelCompletedCameraContainerController : MonoBehaviour {
     private void HandleGameStateChanged(GameState newState) {
         if (newState == GameState.LevelCompleted) {
             transform.DOKill();
-            transform.DOLocalRotate(Vector3.up * 360f, _animationDuration, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+            transform.DOLocalRotate(Vector3.up * 360f, _animationDuration, RotateMode.LocalAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart).SetDelay(0.5f);
         } else {
             transform.DOKill();
             transform.rotation = Quaternion.identity;

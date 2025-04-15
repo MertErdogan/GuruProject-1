@@ -59,7 +59,7 @@ public class StackManager : SingleInstance<StackManager> {
 
     #endregion
 
-    #region Spawn Stack
+    #region Spawn/Despawn Stack
 
     private void SpawnStack() {
         _spawnZPosition += _stackSize;
@@ -73,6 +73,11 @@ public class StackManager : SingleInstance<StackManager> {
         stack.IsEvenStack(isEven);
         stack.Activate();
         CurrentStack = stack;
+    }
+
+    public void DespawnStack(StackController stack) {
+        stack.Deactivate();
+        _pool.AddObjectToPool(stack);
     }
 
     #endregion
