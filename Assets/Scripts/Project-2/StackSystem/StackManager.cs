@@ -26,6 +26,8 @@ public class StackManager : SingleInstance<StackManager> {
         }
     }
 
+    public float RoadEnd { get => LastStack == null ? 10.5f : LastStack.transform.position.z + (LastStack.transform.localScale.z / 2f) + 0.5f; }
+
     [SerializeField] private StackPool _pool;
     [SerializeField] private int _spawnXPosition;
     [SerializeField] private Transform _stackContainer;

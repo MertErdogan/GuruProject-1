@@ -8,12 +8,18 @@ namespace Project2 {
     public class CharacterController : MonoBehaviour {
 
         private StackController _currentStack;
-        public StackController CurrentStack {
+        private StackController CurrentStack {
             get => _currentStack;
-            private set {
+            set {
+                if (_currentStack != null) {
+                    LastStack = _currentStack;
+                }
+
                 _currentStack = value;
             }
         }
+
+        private StackController LastStack { get; set; }
 
         [SerializeField] private float _moveSpeed;
         [SerializeField] private Animator _animator;
@@ -31,6 +37,10 @@ namespace Project2 {
             if (!_allowMovement) return;
 
             transform.position += transform.forward * Time.deltaTime * _moveSpeed;
+
+            if (transform.position.z > StackManager.Instance.RoadEnd) {
+                Fall();
+            }
         }
 
         private void OnDestroy() {
@@ -41,22 +51,14 @@ namespace Project2 {
 
         private void OnTriggerEnter(Collider other) {
             if (other.TryGetComponent(out StackController stackController)) {
+                if (stackController == LastStack) return;
+
                 CurrentStack = stackController;
 
                 transform.DOKill();
                 transform.DOMoveX(stackController.transform.position.x, 0.3f).SetEase(Ease.InOutSine);
             } else if (other.TryGetComponent(out FinishController _)) {
                 GameStateManager.Instance.SetGameState(GameState.LevelCompleted);
-            }
-        }
-
-        private void OnTriggerExit(Collider other) {
-            if (other.TryGetComponent(out StackController stackController)) {
-                if (CurrentStack == stackController) {
-                    GameStateManager.Instance.SetGameState(GameState.LevelFailed);
-
-                    _rigidbody.useGravity = true;
-                }
             }
         }
 
@@ -67,6 +69,16 @@ namespace Project2 {
             _animator.transform.rotation = Quaternion.identity;
 
             _animator.SetBool("Dance", newState == GameState.LevelCompleted);
+        }
+
+        #endregion
+
+        #region Fall
+
+        private void Fall() {
+            GameStateManager.Instance.SetGameState(GameState.LevelFailed);
+
+            _rigidbody.useGravity = true;
         }
 
         #endregion
