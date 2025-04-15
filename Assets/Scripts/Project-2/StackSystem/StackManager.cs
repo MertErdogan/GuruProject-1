@@ -52,7 +52,7 @@ public class StackManager : SingleInstance<StackManager> {
     #region Events
 
     private void HandleGameStateChanged(GameState newState) {
-        if (newState == GameState.Game) {
+        if (newState == GameState.Game && CurrentStack == null) {
             SpawnStack();
         }
     }

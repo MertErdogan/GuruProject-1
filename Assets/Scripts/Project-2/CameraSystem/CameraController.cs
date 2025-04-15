@@ -1,11 +1,12 @@
 using Cinemachine;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : GameStateListener {
 
-    [SerializeField] private GameState _targetState;
+    [SerializeField][EnumFlags] private GameState _targetState;
 
     private CinemachineVirtualCamera _virtualCamera;
 
@@ -20,7 +21,7 @@ public class CameraController : GameStateListener {
     protected override void HandleGameStateChanged(GameState newState) {
         base.HandleGameStateChanged(newState);
 
-        _virtualCamera.Priority = _targetState == newState ? 11 : 10;
+        _virtualCamera.Priority = _targetState.HasFlag(newState) ? 11 : 10;
     }
 
     #endregion

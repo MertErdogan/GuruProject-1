@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class StackController : MonoBehaviour, IPoolObject {
 
     private void Update() {
         if (!_isActivated) return;
+        if (GameStateManager.Instance.State != GameState.Game) return;
 
         transform.position += transform.right * Time.deltaTime * _moveSpeed * (_isEvenStack ? 1 : -1);
     }

@@ -32,6 +32,8 @@ namespace Project2 {
             if (other.TryGetComponent(out StackController stackController)) {
                 transform.DOKill();
                 transform.DOMoveX(stackController.transform.position.x, 0.3f).SetEase(Ease.InOutSine);
+            } else if (other.TryGetComponent(out FinishController _)) {
+                GameStateManager.Instance.SetGameState(GameState.LevelCompleted);
             }
         }
 
@@ -39,6 +41,7 @@ namespace Project2 {
 
         private void HandleGameStateChanged(GameState newState) {
             _allowMovement = newState == GameState.Game;
+            _animator.transform.rotation = Quaternion.identity;
 
             _animator.SetBool("Dance", newState == GameState.LevelCompleted);
         }
